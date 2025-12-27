@@ -55,7 +55,7 @@ const subjectsYear12 = [
 
 // ---------------- AUTH CHECK ----------------
 onAuthStateChanged(auth, async (user) => {
-  if (!user) return window.location.replace("/login.html");
+  if (!user) return window.location.replace("/trove/login.html");
 
   if (!db) {
     console.error("Firestore not initialised!");
@@ -311,9 +311,10 @@ function getSubjectResources(subjects) {
 logoutBtn.addEventListener("click", async () => {
   try {
     await signOut(auth);
-    window.location.replace("/login.html");
+    window.location.replace("/.html");
   } catch (err) {
     console.error("Logout failed:", err);
     alert("Logout failed. Try again.");
   }
 });
+

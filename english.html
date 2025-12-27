@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>English</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <!-- Auth loading -->
+  <div id="loading" class="spinner-wrap">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Protected content -->
+  <div id="resource-content" style="display:none; padding:2rem;">
+    
+    <button id="logoutBtn" class="primary" style="max-width:220px; margin-bottom:2rem;">
+      Log out
+    </button>
+
+    <!-- Your HTML goes here -->
+English
+  </div>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="resource.js"></script>
+</body>
+</html>

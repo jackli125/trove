@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Sign in</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+
+<style>
+    body {
+        background: url('/images/6173fb5fdb9b9370a599274c31c9f092.jpeg') no-repeat center center;
+        background-size: cover;
+    }
+</style>
+
+</head>
+
+<body>
+
+<div class="card">
+  <div class="header">
+    <div class="header-text">
+      <h1 id="title">Welcome back</h1>
+      <div class="subtitle" id="subtitle">Sign in to continue</div>
+    </div>
+    <img src="/images/Pembroke Colour Logo.svg" alt="Pembroke Logo" class="school-logo">
+  </div>
+
+  <input id="email" placeholder="Email">
+  <input id="password" type="password" placeholder="Password">
+  <input id="confirm" type="password" placeholder="Confirm password" style="display:none">
+
+  <div class="forgot">
+    <a id="forgot">Forgot password?</a>
+  </div>
+
+<button class="primary" id="submit">
+  <span class="btn-content">
+    <span class="btn-text">Sign in</span>
+    <span class="spinner hidden"></span>
+  </span>
+</button>
+
+
+<div class="line"></div>
+
+<button class="google-btn" id="google">
+  <span class="btn-content">
+    <img class="google-icon"
+         src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+         alt="">
+    <span class="btn-text">Sign in with Google</span>
+    <span class="spinner hidden"></span>
+  </span>
+</button>
+
+<div class="line"></div>
+
+  <div class="toggle" id="toggle">
+    Don't have an account? <span>Create one</span>
+  </div>
+
+  <div id="error" class="error" style="display:none;">
+    <span>❗</span> <span id="error-msg"></span>
+  </div>
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="login.js"></script>
+<script type="module" src="main.js"></script>
+
+</body>
+
+
+</html>

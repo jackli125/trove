@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+
+<style>
+/* Spinner for loading */
+#loading { text-align: center; }
+.spinner {
+    width: 28px;
+    height: 28px;
+    border: 3px solid rgba(0,0,0,0.15);
+    border-top-color: rgba(0,0,0,0.6);
+    border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+    margin: 40px auto;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* Hide sections until ready */
+#dashboard-content, #onboarding { display: none; }
+
+/* Subjects wrapper */
+#subjects-container-wrapper {
+    display: none;
+    position: relative;
+    margin-bottom: 1rem;
+}
+
+/* Subject input & tags */
+.subjects-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 6px;
+}
+.subject-tag {
+    background: var(--primary);
+    color: #fff;
+    padding: 4px 10px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    font-size: 0.95rem;
+    gap: 6px;
+}
+.subject-tag span {
+    cursor: pointer;
+    font-weight: bold;
+}
+
+/* Dropdown list */
+#subjectDropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    max-height: 160px;
+    overflow-y: auto;
+    background: var(--bg);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    margin-top: 2px;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    display: none;
+}
+.subjectOption {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background 0.2s ease;
+}
+.subjectOption:hover, .subjectOption.highlighted {
+    background: var(--primary);
+    color: #fff;
+}
+</style>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="card" id="loading">
+  <div class="spinner"></div>
+</div>
+
+<!-- ONBOARDING -->
+<div class="card" id="onboarding">
+  <h1>Welcome 👋</h1>
+  <p class="subtitle">Let’s finish setting things up.</p>
+
+  <input id="firstName" placeholder="First name">
+  <input id="lastName" placeholder="Last name">
+<div class="dob-wrapper">
+  <label>Date of Birth</label>
+  <input id="dob" type="text" placeholder="Date of Birth DD/MM/YYYY" maxlength="10" />
+</div>
+<div class="custom-select-wrapper">
+  <div class="custom-select" tabindex="0">
+    <span class="label">Year Level</span>
+    <span class="selected-value">Select</span>
+    <div class="arrow">▼</div>
+    <ul class="options">
+      <li data-value="1">1</li>
+      <li data-value="2">2</li>
+      <li data-value="3">3</li>
+      <li data-value="4">4</li>
+      <li data-value="5">5</li>
+      <li data-value="6">6</li>
+      <li data-value="7">7</li>
+      <li data-value="8">8</li>
+      <li data-value="9">9</li>
+      <li data-value="10">10</li>
+      <li data-value="11">11</li>
+      <li data-value="12">12</li>
+    </ul>
+  </div>
+</div>
+
+
+
+
+
+  <div id="subjects-container-wrapper">
+    <input id="subjectInput" placeholder="Search and add subjects" autocomplete="off">
+    <div class="subjects-container" id="subjectsContainer"></div>
+    <div id="subjectDropdown"></div>
+  </div>
+
+  <button class="primary" id="complete-onboarding">Continue</button>
+</div>
+
+<!-- DASHBOARD -->
+<div id="dashboard-content" style="align-content: left;">
+  <h1>Dashboard</h1>
+  <p>You are signed in.</p>
+
+  <div id="profile-info">
+  <h2>Your Profile</h2>
+  <p><strong>First Name:</strong> <span id="profile-firstName"></span></p>
+  <p><strong>Last Name:</strong> <span id="profile-lastName"></span></p>
+  <p><strong>Date of Birth:</strong> <span id="profile-dob"></span></p>
+  <p><strong>Year Level:</strong> <span id="profile-yearLevel"></span></p>
+  <p><strong>Subjects:</strong> <span id="profile-subjects"></span></p>
+</div>
+
+<div id="resources">
+  <h2>Subject Resources</h2>
+  <ul id="resources-list"></ul>
+</div>
+
+
+
+  <button class="primary" id="logout">Log out</button>
+</div>
+
+<script type="module" src="firebase.js"></script>
+<script type="module" src="dashboard.js"></script>
+</body>
+</html>

@@ -55,7 +55,7 @@ const subjectsYear12 = [
 
 // ---------------- AUTH CHECK ----------------
 onAuthStateChanged(auth, async (user) => {
-  if (!user) return window.location.replace("/trove/login.html");
+  if (!user) return window.location.replace("login.html");
 
   if (!db) {
     console.error("Firestore not initialised!");
@@ -288,7 +288,7 @@ async function populateDashboard(userRef) {
 
 function getSubjectResources(subjects) {
   const resources = {
-    "English": "/english.html",
+    "English": "english.html",
     "Essential English": "https://www.essentialenglish.com",
     "Mathematical Methods": "https://www.mathmethods.com",
     "Specialist Mathematics": "https://www.specialistmath.com",
@@ -311,10 +311,11 @@ function getSubjectResources(subjects) {
 logoutBtn.addEventListener("click", async () => {
   try {
     await signOut(auth);
-    window.location.replace("/.html");
+    window.location.replace("login.html");
   } catch (err) {
     console.error("Logout failed:", err);
     alert("Logout failed. Try again.");
   }
 });
+
 

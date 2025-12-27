@@ -9,7 +9,7 @@ const logoutBtn = document.getElementById("logoutBtn");
 
 onAuthStateChanged(auth, (user) => {
   if (!user) {
-    window.location.replace("/login.html");
+    window.location.replace("/trove/login.html");
     return;
   }
 
@@ -23,9 +23,10 @@ onAuthStateChanged(auth, (user) => {
 logoutBtn.addEventListener("click", async () => {
   try {
     await signOut(auth);
-    window.location.replace("/login.html");
+    window.location.replace("/trove/login.html");
   } catch (err) {
     console.error("Logout failed:", err);
     alert("Logout failed. Please try again.");
   }
 });
+

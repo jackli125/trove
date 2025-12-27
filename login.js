@@ -94,7 +94,7 @@ submitBtn.addEventListener("click", async () => {
       await signInWithEmailAndPassword(auth, email, password);
     }
 
-    window.location.replace("/dashboard.html");
+    window.location.replace("/trove/dashboard.html");
 
   } catch (err) {
     errorMsg.textContent = err.message;
@@ -111,7 +111,7 @@ googleBtn.addEventListener("click", async () => {
 
   try {
     await signInWithPopup(auth, provider);
-    window.location.replace("/dashboard.html");
+    window.location.replace("/trove/dashboard.html");
 
   } catch (err) {
     errorMsg.textContent = err.message;
@@ -145,3 +145,4 @@ forgotLink.addEventListener("click", async () => {
         errorBox.style.color = "#c0392b";
     }
 });
+

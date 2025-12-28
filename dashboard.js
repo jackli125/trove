@@ -292,9 +292,9 @@ function getSubjectResources(subjects) {
     "Essential English": "https://www.essentialenglish.com",
     "Mathematical Methods": "https://www.mathmethods.com",
     "Specialist Mathematics": "https://www.specialistmath.com",
-    "Physics": "https://www.physicsresources.com",
+    "Physics": "physics.html",
     "Biology": "https://www.biologyresources.com",
-    "Chemistry": "https://www.chemistryresources.com",
+    "Chemistry": "chemistry.html",
     "Economics": "https://www.economicsresources.com",
     "History": "https://www.historyresources.com",
     "Visual Arts": "https://www.visualartsresources.com",
@@ -317,5 +317,6 @@ logoutBtn.addEventListener("click", async () => {
     alert("Logout failed. Try again.");
   }
 });
+
 
 

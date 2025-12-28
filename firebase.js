@@ -3,7 +3,7 @@ import { getAuth, GoogleAuthProvider } from "https://www.gstatic.com/firebasejs/
 import { getFirestore } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
 
   const firebaseConfig = {
-    apiKey: "AIzaSyCfeI7aYf_n7Jbl50IDI6gpN--c7KBYKaI",
+    apiKey: "AIzaSyDB2FumeaUkI_KskAlSwW0eWXMVnvegfMg",
     authDomain: "trove-7a0f2.firebaseapp.com",
     projectId: "trove-7a0f2",
     storageBucket: "trove-7a0f2.firebasestorage.app",
@@ -16,3 +16,4 @@ export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const googleProvider = new GoogleAuthProvider();
+

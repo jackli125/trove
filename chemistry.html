@@ -1,33 +1,240 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chemistry</title>
+  <meta charset="UTF-8">
+  <title>English</title>
 
-    <link rel="stylesheet" href="styles.css">
-<link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+    <style>
+        h1 {
+    font-weight: 700;
+    font-size: 35px;
+    justify-content: left;
+    display: flex;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 24px;
+    color: #01338C;
+}
+
+h4 {
+    font-weight: 600;
+    font-size: 24px;
+    padding-left: 30px;
+    color: #01338C;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+h5 {
+    font-weight: 600;
+    font-size: 26px;
+    color: black;
+}
+
+h6 {
+    font-weight: 600;
+    font-size: 22px;
+    color: #01338C;
+    margin-bottom: 10px;
+}
+
+
+/* Arrow button */
+.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #F2F3F2;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.5s ease;
+
+    vertical-align: middle;
+}
+.button:hover {
+    background-color: #01338C;
+}
+.arrow {
+    font-family: 'Calibri', 'Segoe UI', Tahoma, Verdana, sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease, color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.arrow.out {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+.arrow.in {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+}
+.button:hover .arrow {
+    color: white;
+}
+.button:hover .arrow.out {
+    transform: translate(150%, -50%);
+    opacity: 0;
+}
+.button:hover .arrow.in {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+/* Tiles */
+.tile-container {
+    margin: 0px -50px 0px -50px;
+    padding-bottom: 35px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between; /* Distribute tiles evenly */
+    flex-wrap: wrap;
+    border-radius: 8px;
+}
+
+.tile {
+    background: white;
+    flex-basis: calc((100% -100px) / 6); /* Ensure six tiles fit exactly */
+    flex-grow: 1; /* Allow tiles to grow equally */
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tilegrey {
+    background: #f7f7f7;
+    flex-basis: calc((100% -100px) / 6); /* Ensure six tiles fit exactly */
+    flex-grow: 1; /* Allow tiles to grow equally */
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tile:hover {
+    cursor: pointer;
+}
+.tile-image {
+    width: 100%;
+    height: 200px; /* Keeps the original dimensions */
+    object-fit: cover; /* Ensures the image fills the container without distortion */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Stronger easing for zoom effect */
+    transform-origin: bottom;
+
+}
+
+.tile-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.tile-tag {
+    font-size: 14px;
+    color: #01338C;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.tile-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333; /* Default color */
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+    transition: color 0.3s ease; /* Add transition for smooth color change */
+    justify-content: left;
+}
+
+.tile-title:hover {
+    color: #01338C; /* Change color to blue on hover */
+}
+
+.arrowbutton-container {
+    text-align: right;
+    margin-top: -25px;
+}
+
+.tile:hover .button {
+    color: white;
+    background: #01338C;
+}
+
+.tile:hover .button .arrow {
+    color: white;
+}
+
+.tile:hover .button .arrow.out {
+    transform: translate(150%, -50%);
+    opacity: 0;
+}
+.tile:hover .button .arrow.in {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.tile-title:hover {
+    color: #01338C;
+}
+
+/* Zoom tile-image when tile is hovered */
+.tile:hover .tile-image {
+    transform: scale(1.1);
+    transform-origin: bottom;
+}
+    </style>
 </head>
-
-
-<header>
-    <div class="header" id="header">
-      <a href="index.html">
-        <img src="https://www.pembroke.sa.edu.au/dist/images/logo.5fc2dc08d2eaf21dcd4f.svg" alt="Logo" class="logo">
-      </a>
-      <div class="header-right">
-        <div id="settingsIcon" class="settings-icon">&#9881;</div>
-      </div>
-    </div>
-    <script src="header.js"></script>
-  </header>
-  
-  
-
 <body>
-    <h5>Chemistry</h5>
 
-    <div class="tile-container">
+  <!-- Auth loading -->
+  <div id="loading" class="spinner-wrap">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Protected content -->
+  <div id="resource-content" style="display:none; padding:2rem;">
+    
+    <button id="logoutBtn" class="primary" style="max-width:220px; margin-bottom:2rem;">
+      Log out
+    </button>
+
+    <!-- Your HTML goes here -->
+Chemistry
+
+          <div class="tile-container">
 
         <div class="tile">
             <a href="\files\Stage 1 Chemistry Subject Outline 2025.pdf" target="_blank">
@@ -125,68 +332,10 @@
         </div>
 
     </div>
-
-    <div class="whitebackground">
-        <br>
-
-        Back Home
-        <a href="index.html" class="button">
-            <span class="arrow out">&rarr;</span>
-            <span class="arrow in">&rarr;</span>
-        </a>
-
-
-
-
-    <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-
-    <div class="footer">
-        <span style="margin-left: 50px;">AIF 2025</span>
       
-        <a href="#" class="footerbutton">
-          <span class="arrow out">&uarr;</span>
-          <span class="arrow in">&uarr;</span>
-        </a>
-      </div>
-      
-    </div>
-    
-
-    <script src="script.js"></script>
-
-<!-- Sidebar and Overlay -->
-<div id="settingsSidebar" class="sidebar">
-    <h6>Settings</h6>
-    Theme
-    <div class="mode-toggle">
-        <input type="radio" name="theme" id="lightModeRadio" checked>
-        <input type="radio" name="theme" id="darkModeRadio">
-      
-        <div class="toggle-switch">
-          <label for="lightModeRadio">Light</label>
-          <label for="darkModeRadio">Dark</label>
-          <div class="slider"></div>
-        </div>
-      </div>
-      <div class="color-picker-wrapper" id="colorPickerWrapper">
-        <label for="themeColorPicker">Theme Color:</label>
-        <input type="color" id="themeColorPicker" value="#3498db">
-        <br>
-        <button id="resetColorBtn" class="reset-button">Reset Dark Mode</button>
-      </div>
   </div>
-  <div id="sidebarOverlay" class="overlay"></div>
-  
-  <script src="theme.js"></script>
 
-  
-
-  
-  
-  
-
-    </body>
-
-    </html>
-    
-    </div>
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="resource.js"></script>
+</body>
+</html>

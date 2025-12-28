@@ -23,7 +23,7 @@ body {
 }
 
 /* Header */
-header {
+heading {
     margin: 0px -50px 0px -50px;
     font-family: var(--fontface), sans-serif;
     color: black;
@@ -32,7 +32,7 @@ header {
     z-index: 1000;
   }
 
-  .header {
+  .heading {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -49,11 +49,11 @@ header {
     gap: 12px;
   }
 
-.header.scrolled {
+.heading.scrolled {
     transform: translateY(0);
 }
 
-  .header img {
+  .heading img {
     padding-left: 50px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -62,7 +62,7 @@ header {
     transition: width 0.3s ease, height 0.3s ease;
   }
 
-  .header.scrolled img {
+  .heading.scrolled img {
     width: 80px;
   }
 
@@ -486,4 +486,5 @@ button.loading .google-icon {
     color: #666; /* text color */
     font-size: 0.95rem; /* optional */
 }
+
 

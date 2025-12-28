@@ -3,6 +3,7 @@
     --secondary: #016743;
     --primary-dark: #002669;
     --bg: #ffffff;
+    --bgdark: #ececec;
     --text-muted: #666;
 }
 
@@ -19,6 +20,60 @@ body {
     display: grid;
     place-items: center;
     background-color: #ffffff;
+}
+
+/* Header */
+header {
+    margin: 0px -50px 0px -50px;
+    font-family: var(--fontface), sans-serif;
+    color: black;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #F2F3F2;
+    position: fixed;
+    top: 0;
+    width: 100%; /* Ensure it spans the full width */
+    transition: transform 0.3s ease, padding 0.3s ease; /* Smooth transition */
+}
+
+.header-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+.header.scrolled {
+    transform: translateY(0);
+}
+
+  .header img {
+    padding-left: 50px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    width: 150px;
+    height: auto;
+    transition: width 0.3s ease, height 0.3s ease;
+  }
+
+  .header.scrolled img {
+    width: 80px;
+  }
+
+.logo {
+    filter: none;
+    transition: filter 0.3s ease;
+}
+
+
+.scrolled .logo {
+    filter: brightness(0) saturate(100%) contrast(100%);
 }
 
 /* Card */
@@ -431,3 +486,4 @@ button.loading .google-icon {
     color: #666; /* text color */
     font-size: 0.95rem; /* optional */
 }
+

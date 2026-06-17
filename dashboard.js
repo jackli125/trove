@@ -289,15 +289,15 @@ async function populateDashboard(userRef) {
 function getSubjectResources(subjects) {
   const resources = {
     "English": "english.html",
-    "Essential English": "https://www.essentialenglish.com",
-    "Mathematical Methods": "https://www.mathmethods.com",
-    "Specialist Mathematics": "https://www.specialistmath.com",
+    "Essential English": "essential-english.html",
+    "English Literary Studies": "english-literary-studies.html",
+    "Mathematical Methods": "maths-methods.html",
+    "Specialist Mathematics": "specialist-maths.html",
     "Physics": "physics.html",
-    "Biology": "https://www.biologyresources.com",
+    "Biology": "biology.html",
     "Chemistry": "chemistry.html",
-    "Economics": "https://www.economicsresources.com",
-    "History": "https://www.historyresources.com",
-    "Visual Arts": "https://www.visualartsresources.com",
+    "Economics": "economics.html",
+    "Modern History": "modern-history.html",
     // Add more subject links as needed
   };
 

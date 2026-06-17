@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Physics WIP</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+
+    <style>
+      body {
+        background: var(--bgdark);
+      }
+        h1 {
+    font-weight: 600;
+    font-size: 35px;
+    justify-content: left;
+    display: flex;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 24px;
+    color: #01338C;
+}
+
+h4 {
+    font-weight: 600;
+    font-size: 24px;
+    padding-left: 30px;
+    color: #01338C;
+}
+
+h3 {
+    font-weight: 600;
+    font-size: 20px;
+    color: black;
+    margin-bottom: 10px;
+}
+
+h5 {
+    font-weight: 600;
+    font-size: 26px;
+    color: black;
+}
+
+h6 {
+    font-weight: 600;
+    font-size: 22px;
+    color: #01338C;
+    margin-bottom: 10px;
+}
+
+
+/* Arrow button */
+.button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background-color: #F2F3F2;
+    border: none;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background 0.5s ease;
+
+    vertical-align: middle;
+}
+.button:hover {
+    background-color: #01338C;
+}
+.arrow {
+    font-family: 'Calibri', 'Segoe UI', Tahoma, Verdana, sans-serif;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 11px;
+    font-weight: bold;
+    color: black;
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.2s ease, color 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+.arrow.out {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+.arrow.in {
+    transform: translate(-150%, -50%);
+    opacity: 0;
+}
+.button:hover .arrow {
+    color: white;
+}
+.button:hover .arrow.out {
+    transform: translate(150%, -50%);
+    opacity: 0;
+}
+.button:hover .arrow.in {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+/* Tiles */
+.tile-container {
+    margin: 0px -50px 0px -50px;
+    padding-bottom: 35px;
+    padding-left: 50px;
+    padding-right: 50px;
+    display: flex;
+    gap: 20px;
+    justify-content: space-between; /* Distribute tiles evenly */
+    flex-wrap: wrap;
+    border-radius: 8px;
+}
+
+.tile {
+    background: white;
+    flex-basis: calc((100% -100px) / 6); /* Ensure six tiles fit exactly */
+    flex-grow: 1; /* Allow tiles to grow equally */
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tilegrey {
+    background: #f7f7f7;
+    flex-basis: calc((100% -100px) / 6); /* Ensure six tiles fit exactly */
+    flex-grow: 1; /* Allow tiles to grow equally */
+    flex-shrink: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+}
+
+.tile:hover {
+    cursor: pointer;
+}
+.tile-image {
+    width: 100%;
+    height: 200px; /* Keeps the original dimensions */
+    object-fit: cover; /* Ensures the image fills the container without distortion */
+    transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Stronger easing for zoom effect */
+    transform-origin: bottom;
+
+}
+
+.tile-content {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.tile-tag {
+    font-size: 14px;
+    color: #01338C;
+    font-weight: 600;
+    margin: 0 0 5px 0;
+}
+
+.tile-title {
+    font-size: 18px;
+    font-weight: 600;
+    color: #333; /* Default color */
+    margin: 0 0 20px 0;
+    line-height: 1.4;
+    transition: color 0.3s ease; /* Add transition for smooth color change */
+    justify-content: left;
+}
+
+.tile-title:hover {
+    color: #01338C; /* Change color to blue on hover */
+}
+
+.arrowbutton-container {
+    text-align: right;
+    margin-top: -25px;
+}
+
+.tile:hover .button {
+    color: white;
+    background: #01338C;
+}
+
+.tile:hover .button .arrow {
+    color: white;
+}
+
+.tile:hover .button .arrow.out {
+    transform: translate(150%, -50%);
+    opacity: 0;
+}
+.tile:hover .button .arrow.in {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+}
+
+.tile-title:hover {
+    color: #01338C;
+}
+
+/* Zoom tile-image when tile is hovered */
+.tile:hover .tile-image {
+    transform: scale(1.1);
+    transform-origin: bottom;
+}
+    </style>
+</head>
+<body>
+
+  <!-- Auth loading -->
+  <div id="loading" class="spinner-wrap">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- Protected content -->
+  <div id="resource-content" style="display:none; padding:2rem;">
+    
+    <button id="logoutBtn" class="primary" style="max-width:220px; margin-bottom:2rem;">
+      Log out
+    </button>
+
+    <!-- Your HTML goes here -->
+
+<header>
+    <div class="heading" id="heading">
+      <a href="index.html">
+        <img src="https://www.pembroke.sa.edu.au/dist/images/logo.5fc2dc08d2eaf21dcd4f.svg" alt="Logo" class="logo">
+      </a>
+      <div class="header-right">
+        <div id="settingsIcon" class="settings-icon">&#9881;</div>
+      </div>
+    </div>
+    <script src="header.js"></script>
+  </header>
+    
+<h1>Physics WIP</h1>
+
+          <div class="tile-container">
+
+        <div class="tile">
+            <a href="\files\Stage 1 Chemistry Subject Outline 2025.pdf" target="_blank">
+                <img src="https://d2rdy13jtquiv5.cloudfront.net/resized/generalimages/1694484/2022_03_March_22-Pembroke-Campaign-10349_edited_a28930b60decd87861cb5491ed347d73_497069aeb68725f323a2b40f754fe4f4.jpg" alt="Tile 1 Image" class="tile-image">
+            </a>
+            <div class="tile-content">
+                <h3 class="tile-title">
+                    <a href="\files\Stage 1 Chemistry Subject Outline 2025.pdf" target="_blank" style="text-decoration: none; color: inherit;">
+                        SACE Subject Outline
+                    </a>
+                </h3>
+                <div class="arrowbutton-container">
+                    <a href="\files\Stage 1 Chemistry Subject Outline 2025.pdf" class="button">
+                        <span class="arrow out">&rarr;</span>
+                        <span class="arrow in">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile">
+            <a href="https://trove.pembroke.sa.edu.au/homepage/code/CHM4A4" target="_blank">
+                <img src="https://d2rdy13jtquiv5.cloudfront.net/resized/generalimages/4974949/Commencement-of-Year-Ceremony-2023_c475d2646bd58eb01fe956780febc3f4_0be6d12e752e53826ca7cc3f34142144.jpg" alt="Tile 1 Image" class="tile-image">
+            </a>
+            <div class="tile-content">
+                <h3 class="tile-title">
+                    <a href="https://trove.pembroke.sa.edu.au/homepage/code/CHM4A4" target="_blank" style="text-decoration: none; color: inherit;">
+                        Class Page
+                    </a>
+                </h3>
+                <div class="arrowbutton-container">
+                    <a href="https://trove.pembroke.sa.edu.au/homepage/code/CHM4A4" class="button">
+                        <span class="arrow out">&rarr;</span>
+                        <span class="arrow in">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile">
+            <a href="https://trove.pembroke.sa.edu.au/homepage/2011" target="_blank">
+                <img src="https://d2rdy13jtquiv5.cloudfront.net/resized/generalimages/8172/Science-teacher-2_f053039be347b729e0428fe4214b19da.jpg" alt="Tile 1 Image" class="tile-image">
+            </a>
+            <div class="tile-content">
+                <h3 class="tile-title">
+                    <a href="https://trove.pembroke.sa.edu.au/homepage/2011" target="_blank" style="text-decoration: none; color: inherit;">
+                        Common Chemistry Page
+                    </a>
+                </h3>
+                <div class="arrowbutton-container">
+                    <a href="https://trove.pembroke.sa.edu.au/homepage/2011" class="button">
+                        <span class="arrow out">&rarr;</span>
+                        <span class="arrow in">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile">
+            <a href="https://app.peardeck.com/join" target="_blank">
+                <img src="/images/peardeck.png" alt="Tile 1 Image" class="tile-image">
+            </a>
+            <div class="tile-content">
+                <h3 class="tile-title">
+                    <a href="https://happyteacherpd.com/cdn/shop/files/peardeck.png?v=1714492648" target="_blank" style="text-decoration: none; color: inherit;">
+                        PearDeck
+                    </a>
+                </h3>
+                <div class="arrowbutton-container">
+                    <a href="https://app.peardeck.com/join" class="button">
+                        <span class="arrow out">&rarr;</span>
+                        <span class="arrow in">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="tile">
+            <a href="https://ptable.com/?lang=en#Properties/Series" target="_blank">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSja4R6XCfHB2xgc5Edow5hdbW7fV_C-_LuKg&s" alt="Tile 1 Image" class="tile-image">
+            </a>
+            <div class="tile-content">
+                <h3 class="tile-title">
+                    <a href="https://ptable.com/?lang=en#Properties/Series" target="_blank" style="text-decoration: none; color: inherit;">
+                        Periodic Table
+                    </a>
+                </h3>
+                <div class="arrowbutton-container">
+                    <a href="https://ptable.com/?lang=en#Properties/Series" class="button">
+                        <span class="arrow out">&rarr;</span>
+                        <span class="arrow in">&rarr;</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+      
+  </div>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="resource.js"></script>
+</body>
+</html>

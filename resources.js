@@ -1,4 +1,4 @@
-const GITHUB_USER = "Yjackli125";
+const GITHUB_USER = "jackli125";
 const GITHUB_REPO = "trove";
 
 const SUBJECT = "chemistry";

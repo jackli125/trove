@@ -1,91 +1,181 @@
-const USERNAME = "jackli125";
-const REPO = "trove";
-
-// structure you want to display
-const TOPICS = [
-  "topic 1",
-  "topic 2",
-  "topic 3",
-  "topic 4"
-];
+const GITHUB_USER = "Yjackli125";
+const GITHUB_REPO = "trove";
 
 const SUBJECT = "chemistry";
 
-// ---------- FETCH FILES FROM GITHUB ----------
-async function fetchFolder(path) {
-  const url = `https://api.github.com/repos/${USERNAME}/${REPO}/contents/${path}`;
+const TOPICS = {
 
-  const res = await fetch(url);
-  if (!res.ok) throw new Error("Failed to load: " + path);
+    "Topic 1": {
+        title: "Industrial Chemistry",
+        description:
+            "Topics 1.3 and 2"
+    },
 
-  return await res.json();
+    "Topic 2": {
+        title: "Environmental Chemistry",
+        description:
+            "1.1 1.2 1.4 1.5 4.1"
+    },
+
+    "Topic 3": {
+        title: "Organic Chemistry",
+        description:
+            "Topic 3"
+    },
+
+    "Topic 4": {
+        title: "Managing Resources",
+        description:
+            "Topic 4"
+    }
+
+};
+
+let currentFiles = [];
+
+function formatSize(bytes) {
+
+    if (bytes < 1024)
+        return `${bytes} B`;
+
+    if (bytes < 1024 * 1024)
+        return `${(bytes/1024).toFixed(1)} KB`;
+
+    return `${(bytes/1024/1024).toFixed(1)} MB`;
 }
 
-// ---------- RENDER TOPIC FOLDERS ----------
-function renderFolders() {
-  const container = document.getElementById("folder-container");
+function getIcon(filename) {
 
-  TOPICS.forEach(topic => {
-    const div = document.createElement("div");
-    div.className = "topic-folder";
+    const ext =
+        filename.split(".").pop().toLowerCase();
 
-    div.innerHTML = `
-      <div class="folder-icon">📁</div>
-      <div class="folder-info">
-        <h3>${topic}</h3>
-        <p>Click to view files</p>
-      </div>
-      <button class="open-folder">Open</button>
-    `;
+    if (ext === "pdf") return "📕";
 
-    div.onclick = () => loadTopic(topic);
+    if (["ppt","pptx"].includes(ext))
+        return "📊";
 
-    container.appendChild(div);
-  });
+    if (["doc","docx"].includes(ext))
+        return "📝";
+
+    if (["xls","xlsx"].includes(ext))
+        return "📈";
+
+    return "📄";
 }
 
-// ---------- LOAD FILES IN A TOPIC ----------
-async function loadTopic(topic) {
-  const container = document.getElementById("file-container");
-  container.innerHTML = "<p>Loading...</p>";
+async function loadTopics() {
 
-  const path = `files/${SUBJECT}/${topic}`;
+    const container =
+        document.getElementById("folder-container");
 
-  try {
-    const files = await fetchFolder(path);
+    for (const topic in TOPICS) {
 
-    container.innerHTML = `<h2>${topic}</h2>`;
+        const url =
+        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/files/${SUBJECT}/${encodeURIComponent(topic)}`;
+
+        const response =
+            await fetch(url);
+
+        const files =
+            await response.json();
+
+        const card =
+            document.createElement("div");
+
+        card.className = "topic-card";
+
+        card.innerHTML = `
+            <div class="topic-number">
+                ${topic}
+            </div>
+
+            <div class="topic-name">
+                ${TOPICS[topic].title}
+            </div>
+
+            <div class="topic-meta">
+                <span>${files.length} resources</span>
+            </div>
+        `;
+
+        card.onclick = () => {
+
+            document
+                .querySelectorAll(".topic-card")
+                .forEach(x =>
+                    x.classList.remove("active"));
+
+            card.classList.add("active");
+
+            showTopic(
+                topic,
+                files
+            );
+        };
+
+        container.appendChild(card);
+    }
+}
+
+function showTopic(topic, files) {
+
+    currentFiles = files;
+
+    document.getElementById(
+        "currentTopic"
+    ).textContent =
+        TOPICS[topic].title;
+
+    document.getElementById(
+        "topicDescription"
+    ).textContent =
+        TOPICS[topic].description;
+
+    renderTable(files);
+}
+
+function renderTable(files) {
+
+    const table =
+        document.getElementById(
+            "resourceTable"
+        );
+
+    table.innerHTML = "";
 
     files.forEach(file => {
-      if (file.type !== "file") return;
 
-      const fileCard = document.createElement("a");
-      fileCard.className = "file-card";
-      fileCard.href = file.download_url;
-      fileCard.target = "_blank";
+        const row =
+            document.createElement("a");
 
-      const ext = file.name.split(".").pop().toLowerCase();
+        row.className =
+            "resource-row";
 
-      fileCard.innerHTML = `
-        <div class="file-icon ${ext}">
-          ${ext.toUpperCase()}
-        </div>
+        row.href =
+            file.download_url;
 
-        <div class="file-details">
-          <h4>${file.name}</h4>
-          <span>Open file</span>
-        </div>
-      `;
+        row.target = "_blank";
 
-      container.appendChild(fileCard);
+        row.innerHTML = `
+            <div class="resource-type">
+                ${getIcon(file.name)}
+            </div>
+
+            <div class="resource-name">
+                ${file.name}
+            </div>
+
+            <div class="resource-size">
+                ${formatSize(file.size)}
+            </div>
+
+            <div class="resource-action">
+                Open →
+            </div>
+        `;
+
+        table.appendChild(row);
     });
-
-  } catch (err) {
-    container.innerHTML = "<p>Could not load files.</p>";
-    console.error(err);
-  }
 }
 
-// ---------- INIT ----------
-renderFolders();
-loadTopic(TOPICS[0]);
+loadTopics();

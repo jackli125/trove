@@ -3,33 +3,39 @@ const GITHUB_REPO = "trove";
 
 const SUBJECT = "chemistry";
 
-const TOPICS = {
-
-    "Topic 1": {
-        title: "Industrial Chemistry",
+const TOPICS = [
+    {
+        folder: "topic 1",
+        label: "Topic 1",
+        title: "Atomic Structure",
         description:
-            "Topics 1.3 and 2"
+            "Atoms, isotopes and electron configuration"
     },
 
-    "Topic 2": {
-        title: "Environmental Chemistry",
+    {
+        folder: "topic 2",
+        label: "Topic 2",
+        title: "Bonding",
         description:
-            "1.1 1.2 1.4 1.5 4.1"
+            "Ionic, covalent and metallic bonding"
     },
 
-    "Topic 3": {
+    {
+        folder: "topic 3",
+        label: "Topic 3",
+        title: "Quantitative Chemistry",
+        description:
+            "Moles, concentration and stoichiometry"
+    },
+
+    {
+        folder: "topic 4",
+        label: "Topic 4",
         title: "Organic Chemistry",
         description:
-            "Topic 3"
-    },
-
-    "Topic 4": {
-        title: "Managing Resources",
-        description:
-            "Topic 4"
+            "Hydrocarbons and functional groups"
     }
-
-};
+];
 
 let currentFiles = [];
 
@@ -39,9 +45,9 @@ function formatSize(bytes) {
         return `${bytes} B`;
 
     if (bytes < 1024 * 1024)
-        return `${(bytes/1024).toFixed(1)} KB`;
+        return `${(bytes / 1024).toFixed(1)} KB`;
 
-    return `${(bytes/1024/1024).toFixed(1)} MB`;
+    return `${(bytes / 1024 / 1024).toFixed(1)} MB`;
 }
 
 function getIcon(filename) {
@@ -49,7 +55,8 @@ function getIcon(filename) {
     const ext =
         filename.split(".").pop().toLowerCase();
 
-    if (ext === "pdf") return "📕";
+    if (ext === "pdf")
+        return "📕";
 
     if (["ppt","pptx"].includes(ext))
         return "📊";
@@ -68,52 +75,67 @@ async function loadTopics() {
     const container =
         document.getElementById("folder-container");
 
-    for (const topic in TOPICS) {
+    for (const topic of TOPICS) {
 
         const url =
-        `https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/files/${SUBJECT}/${encodeURIComponent(topic)}`;
+`https://api.github.com/repos/${GITHUB_USER}/${GITHUB_REPO}/contents/files/${SUBJECT}/${encodeURIComponent(topic.folder)}`;
 
-        const response =
-            await fetch(url);
+        try {
 
-        const files =
-            await response.json();
+            const response =
+                await fetch(url);
 
-        const card =
-            document.createElement("div");
+            const files =
+                await response.json();
 
-        card.className = "topic-card";
+            const fileCount =
+                Array.isArray(files)
+                    ? files.length
+                    : 0;
 
-        card.innerHTML = `
-            <div class="topic-number">
-                ${topic}
-            </div>
+            const card =
+                document.createElement("div");
 
-            <div class="topic-name">
-                ${TOPICS[topic].title}
-            </div>
+            card.className = "topic-card";
 
-            <div class="topic-meta">
-                <span>${files.length} resources</span>
-            </div>
-        `;
+            card.innerHTML = `
+                <div class="topic-number">
+                    ${topic.label}
+                </div>
 
-        card.onclick = () => {
+                <div class="topic-name">
+                    ${topic.title}
+                </div>
 
-            document
-                .querySelectorAll(".topic-card")
-                .forEach(x =>
-                    x.classList.remove("active"));
+                <div class="topic-meta">
+                    ${fileCount} resources
+                </div>
+            `;
 
-            card.classList.add("active");
+            card.onclick = () => {
 
-            showTopic(
-                topic,
-                files
+                document
+                    .querySelectorAll(".topic-card")
+                    .forEach(card =>
+                        card.classList.remove("active"));
+
+                card.classList.add("active");
+
+                showTopic(
+                    topic,
+                    files
+                );
+            };
+
+            container.appendChild(card);
+
+        } catch(err) {
+
+            console.error(
+                topic.folder,
+                err
             );
-        };
-
-        container.appendChild(card);
+        }
     }
 }
 
@@ -124,24 +146,35 @@ function showTopic(topic, files) {
     document.getElementById(
         "currentTopic"
     ).textContent =
-        TOPICS[topic].title;
+        topic.title;
 
     document.getElementById(
         "topicDescription"
     ).textContent =
-        TOPICS[topic].description;
+        topic.description;
 
-    renderTable(files);
+    renderFiles(files);
 }
 
-function renderTable(files) {
+function renderFiles(files) {
 
     const table =
         document.getElementById(
             "resourceTable"
         );
 
-    table.innerHTML = "";
+    table.innerHTML = `
+        <div class="resource-header">
+            <div></div>
+            <div>Resource</div>
+            <div style="text-align:right">
+                Size
+            </div>
+            <div style="text-align:right">
+                Open
+            </div>
+        </div>
+    `;
 
     files.forEach(file => {
 
@@ -154,7 +187,8 @@ function renderTable(files) {
         row.href =
             file.download_url;
 
-        row.target = "_blank";
+        row.target =
+            "_blank";
 
         row.innerHTML = `
             <div class="resource-type">
@@ -170,12 +204,29 @@ function renderTable(files) {
             </div>
 
             <div class="resource-action">
-                Open →
+                →
             </div>
         `;
 
         table.appendChild(row);
     });
 }
+
+document
+.getElementById("resourceSearch")
+.addEventListener("input", e => {
+
+    const term =
+        e.target.value.toLowerCase();
+
+    const filtered =
+        currentFiles.filter(file =>
+            file.name
+                .toLowerCase()
+                .includes(term)
+        );
+
+    renderFiles(filtered);
+});
 
 loadTopics();

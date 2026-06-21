@@ -349,11 +349,51 @@ h6 {
 
     </div>
 
-    <h1>Chemistry Resources</h1>
 
-      <div id="folder-container" class="folder-grid"></div>
-<br>
-      <div id="file-container" class="file-grid"></div>
+<h1>Chemistry Resources</h1>
+
+<div class="resource-browser">
+
+    <div class="resource-search">
+        <input
+            type="text"
+            id="resourceSearch"
+            placeholder="Search resources..."
+        >
+    </div>
+
+    <div id="folder-container" class="topic-grid"></div>
+
+    <div class="resource-panel">
+
+        <div class="resource-panel-header">
+
+            <div>
+                <h2 id="currentTopic">
+                    Select a Topic
+                </h2>
+
+                <p id="topicDescription">
+                    Choose a topic to view resources.
+                </p>
+            </div>
+
+        </div>
+
+        <div id="resourceTable">
+
+            <div class="empty-state">
+                Select a topic above.
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+    
       
   </div>
 
